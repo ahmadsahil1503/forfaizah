@@ -781,4 +781,16 @@ console.log("🚀 Performance Patch Loaded");/* ================================
     // Check frequently
     setInterval(cleanHearts, 100);
 
-})();
+})();/* ===== Music Fix ===== */
+
+function changeSong(songName) {
+    const music = document.getElementById("bgMusic");
+
+    music.pause();
+    music.src = songName;
+    music.load();
+
+    music.play().catch(() => {
+        console.log("Tap anywhere to start music.");
+    });
+}
