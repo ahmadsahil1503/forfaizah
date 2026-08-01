@@ -793,4 +793,31 @@ function changeSong(songName) {
     music.play().catch(() => {
         console.log("Tap anywhere to start music.");
     });
-}
+}/* ===== FINAL MUSIC FIX ===== */
+
+window.changeSong = function(songName) {
+
+    const music = document.getElementById("bgMusic");
+
+    if (!music) return;
+
+    music.pause();
+
+    music.removeAttribute("src");
+    music.innerHTML = "";
+
+    music.src = songName;
+
+    music.load();
+
+    const playPromise = music.play();
+
+    if (playPromise !== undefined) {
+        playPromise.catch(() => {
+            document.body.addEventListener("click", function once() {
+                music.play();
+                document.body.removeEventListener("click", once);
+            }, { once: true });
+        });
+    }
+};
