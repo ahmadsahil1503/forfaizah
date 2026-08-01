@@ -820,4 +820,109 @@ window.changeSong = function(songName) {
             }, { once: true });
         });
     }
-};
+};/* ========= LIGHTWEIGHT ANIMATION RESTORE ========= */
+
+window.addEventListener("load", () => {
+
+    // Hide loader
+    const loader = document.getElementById("loader");
+    if (loader) {
+        setTimeout(() => {
+            loader.style.opacity = "0";
+            loader.style.pointerEvents = "none";
+            setTimeout(() => loader.remove(), 600);
+        }, 800);
+    }
+
+    // GSAP animations (lightweight)
+    if (typeof gsap !== "undefined") {
+
+        gsap.from(".hero-content", {
+            opacity: 0,
+            y: 40,
+            duration: 1.2
+        });
+
+        gsap.utils.toArray(".letter-section").forEach(section => {
+
+            gsap.from(section, {
+                opacity: 0,
+                y: 60,
+                duration: 0.8,
+                scrollTrigger: undefined
+            });
+
+        });
+
+    }
+
+    // Reveal sections on scroll
+    const observer = new IntersectionObserver(entries => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+            }
+
+        });
+
+    }, {
+        threshold: 0.15
+    });
+
+    document.querySelectorAll(
+        ".letter-section,.gallery,.videos,.music,.gift-section,.ending"
+    ).forEach(el => {
+
+        el.style.opacity = "0";
+        el.style.transform = "translateY(40px)";
+        el.style.transition = "all .8s ease";
+
+        observer.observe(el);
+
+    });
+
+});
+
+/* ===== ONLY 10 HEARTS ===== */
+
+(function () {
+
+    const container = document.body;
+
+    function createHeart() {
+
+        if (document.querySelectorAll(".floating-heart").length >= 10) return;
+
+        const heart = document.createElement("div");
+
+        heart.className = "floating-heart";
+        heart.innerHTML = "🤍";
+
+        heart.style.position = "fixed";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "100vh";
+        heart.style.fontSize = (14 + Math.random() * 10) + "px";
+        heart.style.opacity = "0.45";
+        heart.style.pointerEvents = "none";
+        heart.style.zIndex = "2";
+
+        container.appendChild(heart);
+
+        heart.animate([
+            { transform: "translateY(0)", opacity: 0.45 },
+            { transform: "translateY(-110vh)", opacity: 0 }
+        ], {
+            duration: 12000,
+            easing: "linear"
+        });
+
+        setTimeout(() => heart.remove(), 12000);
+    }
+
+    setInterval(createHeart, 1200);
+
+})();
