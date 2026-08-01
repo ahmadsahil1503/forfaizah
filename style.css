@@ -1059,4 +1059,19 @@ video,
 img{
     position:relative !important;
     z-index:999 !important;
+}.hidden,
+.reveal {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
+
+.greeting {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+body {
+    overflow-x: hidden;
 }
