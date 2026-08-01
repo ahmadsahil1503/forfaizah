@@ -752,4 +752,33 @@ video.preload="metadata";
 });
 
 
-console.log("🚀 Performance Patch Loaded");
+console.log("🚀 Performance Patch Loaded");/* ==========================================
+   ULTRA HEART REDUCER (Keep only 10 hearts)
+========================================== */
+
+(function () {
+
+    const MAX_HEARTS = 10;
+
+    function cleanHearts() {
+        const hearts = document.querySelectorAll(".heart");
+
+        // Remove oldest hearts if there are more than 10
+        while (hearts.length > MAX_HEARTS) {
+            hearts[0].remove();
+            break;
+        }
+
+        // Make all hearts smaller and lighter
+        document.querySelectorAll(".heart").forEach(heart => {
+            heart.style.opacity = "0.15";
+            heart.style.transform = "scale(0.55)";
+            heart.style.pointerEvents = "none";
+            heart.style.filter = "blur(0.3px)";
+        });
+    }
+
+    // Check frequently
+    setInterval(cleanHearts, 100);
+
+})();
