@@ -1040,4 +1040,23 @@ html{
     display:none;
 }
 
+}/* ===== HEART FIX ===== */
+
+/* Make hearts lighter and smaller */
+.heart{
+    opacity:0.08 !important;
+    transform:scale(0.45) !important;
+    z-index:1 !important;
+    pointer-events:none !important;
+}
+
+/* Keep images and videos above hearts */
+.gallery,
+.gallery * ,
+.videos,
+.videos * ,
+video,
+img{
+    position:relative !important;
+    z-index:999 !important;
 }
