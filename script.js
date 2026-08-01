@@ -680,4 +680,76 @@ aurora.style.transform=`translateY(${window.scrollY*0.05}px)`;
 
 console.log("%cWebsite Loaded Successfully 🤍",
 
-"color:#9fdcff;font-size:16px;font-weight:bold;");
+"color:#9fdcff;font-size:16px;font-weight:bold;");/* ==========================================
+   PERFORMANCE PATCH
+========================================== */
+
+/* Pause background animations while scrolling */
+
+let scrollTimer;
+
+window.addEventListener("scroll",()=>{
+
+document.body.classList.add("scrolling");
+
+clearTimeout(scrollTimer);
+
+scrollTimer=setTimeout(()=>{
+
+document.body.classList.remove("scrolling");
+
+},120);
+
+},{passive:true});
+
+
+/* Animate only visible images */
+
+const lazyObserver=new IntersectionObserver((entries)=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("show");
+
+lazyObserver.unobserve(entry.target);
+
+}
+
+});
+
+},{
+threshold:.15
+});
+
+document.querySelectorAll(".letter,.gallery-grid img,.video-grid video").forEach(el=>{
+
+el.classList.add("reveal");
+
+lazyObserver.observe(el);
+
+});
+
+
+/* Reduce lag on gallery */
+
+document.querySelectorAll(".gallery-grid img").forEach(img=>{
+
+img.loading="lazy";
+
+img.decoding="async";
+
+});
+
+
+/* Reduce lag on videos */
+
+document.querySelectorAll("video").forEach(video=>{
+
+video.preload="metadata";
+
+});
+
+
+console.log("🚀 Performance Patch Loaded");
