@@ -981,4 +981,63 @@ width:230px;
 
 }
 
+}/* ==========================================
+   PERFORMANCE PATCH
+========================================== */
+
+/* GPU acceleration */
+.hero,
+.letter,
+.gallery-grid img,
+.video-grid video,
+.gift-box,
+button{
+    transform:translateZ(0);
+    backface-visibility:hidden;
+    will-change:transform;
+}
+
+/* Animate only visible sections */
+.reveal{
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity .6s ease,transform .6s ease;
+}
+
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* Lighter hover effects */
+.gallery-grid img:hover{
+    transform:scale(1.02);
+}
+
+.letter:hover{
+    transform:translateY(-4px);
+}
+
+/* Reduce work while scrolling */
+html{
+    scroll-behavior:smooth;
+}
+
+/* Disable heavy effects on phones */
+@media (max-width:768px){
+
+#particles,
+#stars,
+#aurora{
+    opacity:.55;
+}
+
+.firefly{
+    display:none;
+}
+
+.shooting-star{
+    display:none;
+}
+
 }
