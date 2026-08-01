@@ -941,4 +941,56 @@ window.addEventListener('DOMContentLoaded',()=>{
  setInterval(()=>{
    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('active'));
  },1000);
+});/* ========= WEBSITE FIX ========= */
+
+window.addEventListener("load", () => {
+
+    // Hide loading screen if present
+    const loader = document.querySelector(".loader");
+    if (loader) {
+        loader.style.opacity = "0";
+        setTimeout(() => loader.remove(), 600);
+    }
+
+    // Show greeting
+    const greeting = document.querySelector(".greeting");
+    if (greeting) {
+        greeting.style.display = "flex";
+        greeting.style.opacity = "1";
+        greeting.style.visibility = "visible";
+    }
+
+    // Reveal all hidden sections
+    document.querySelectorAll(".hidden,.reveal").forEach(el => {
+        el.classList.add("show");
+        el.style.opacity = "1";
+        el.style.visibility = "visible";
+        el.style.transform = "translateY(0)";
+    });
+
+    // Start first song after first touch/click
+    const audio = document.querySelector("audio");
+    if (audio) {
+        const playMusic = () => {
+            audio.volume = 0.8;
+            audio.play().catch(()=>{});
+            document.removeEventListener("click", playMusic);
+            document.removeEventListener("touchstart", playMusic);
+        };
+
+        document.addEventListener("click", playMusic, { once: true });
+        document.addEventListener("touchstart", playMusic, { once: true });
+
+        // Switch to Hey Shona when Haareya ends
+        audio.addEventListener("ended", () => {
+            audio.src = "heyshona.mp3";
+            audio.play().catch(()=>{});
+        });
+    }
+
+    // Force animations
+    document.querySelectorAll("*").forEach(el => {
+        el.style.animationPlayState = "running";
+    });
+
 });
